@@ -576,7 +576,8 @@ async def verify_twitter_ownership_tweet(
     persona = None
     res = await verify_latest_tweet(username, handle)
     if res['verified']:
-        if not ('google.com' in provider_data or 'apple.com' in provider_data):
+        allowed_providers = {'google.com', 'apple.com'}
+        if not any(provider in allowed_providers for provider in provider_data):
             persona = await upsert_persona_from_twitter_profile(username, handle, uid)
         else:
             if persona_id:
