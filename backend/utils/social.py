@@ -27,7 +27,7 @@ async def get_twitter_profile(handle: str) -> Dict[str, Any]:
     return data
 
 async def get_twitter_timeline(handle: str) -> Dict[str, Any]:
-    print(f"Fetching Twitter timeline for {handle}...")
+    print("Fetching Twitter timeline...")
     url = f"https://{rapid_api_host}/timeline.php?screenname={handle}"
 
     headers = {
@@ -41,7 +41,7 @@ async def get_twitter_timeline(handle: str) -> Dict[str, Any]:
     return data
 
 async def verify_latest_tweet(username: str, handle: str) -> Dict[str, Any]:
-    print(f"Fetching latest tweet for {handle}, username {username}...")
+    print("Fetching latest tweet...")
     url = f"https://{rapid_api_host}/timeline.php?screenname={handle}"
 
     headers = {
