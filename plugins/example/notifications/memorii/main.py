@@ -591,7 +591,7 @@ def webhook():
         
     except Exception as e:
         logger.error(f"Error processing webhook request: {str(e)}", exc_info=True)
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "An internal error has occurred."}), 500
 
 @app.route('/webhook/setup-status', methods=['GET'])
 def setup_status():
