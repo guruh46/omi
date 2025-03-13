@@ -16,7 +16,7 @@ firebase_admin.initialize_app()
 def get_facts_from_memories(
         memories: List[dict], uid: str, user_name: str, existing_facts: List[Fact]
 ) -> List[Tuple[str, List[Fact]]]:
-    print('get_facts_from_memories', len(memories), user_name, len(existing_facts))
+    print('get_facts_from_memories', len(memories), len(existing_facts))
 
     # learning_facts = list(filter(lambda x: x.category == 'learnings', existing_facts))
     all_facts = {}
