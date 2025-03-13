@@ -90,7 +90,9 @@ def retrieve_file_paths(files: List[UploadFile], uid: str):
         if time > datetime.now() or time < datetime(2024, 1, 1):
             raise HTTPException(status_code=400, detail=f"Invalid file format {filename}, invalid timestamp")
 
-        path = f"{directory}{filename}"
+        path = os.path.normpath(f"{directory}{filename}")
+        if not path.startswith(os.path.abspath(directory)):
+            raise HTTPException(status_code=400, detail=f"Invalid file path {filename}")
         paths.append(path)
         with open(path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
