@@ -41,11 +41,19 @@ const formatDate = (dateString: string): string => {
 };
 
 const fetchTwitterTimeline = async (screenname: string) => {
+  const allowedHosts = ['api.example.com', 'another-api.example.com']; // Add allowed hostnames here
+  const apiHost = process.env.NEXT_PUBLIC_RAPIDAPI_HOST!;
+
+  if (!allowedHosts.includes(apiHost)) {
+    console.error('Invalid API host:', apiHost);
+    return [];
+  }
+
   try {
-    const response = await fetch(`https://${process.env.NEXT_PUBLIC_RAPIDAPI_HOST}/timeline.php?screenname=${screenname}`, {
+    const response = await fetch(`https://${apiHost}/timeline.php?screenname=${screenname}`, {
       headers: {
         'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
-        'x-rapidapi-host': process.env.NEXT_PUBLIC_RAPIDAPI_HOST!,
+        'x-rapidapi-host': apiHost,
       },
     });
 
