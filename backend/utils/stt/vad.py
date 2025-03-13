@@ -17,6 +17,10 @@ AUTHORIZED_VAD_API_URLS = [
     "https://trusted-vad-api2.com"
 ]
 
+def validate_vad_api_url(vad_api_url):
+    if vad_api_url not in AUTHORIZED_VAD_API_URLS:
+        raise HTTPException(status_code=400, detail="Unauthorized VAD API URL")
+
 def validate_vad_api_url(url):
     if url not in AUTHORIZED_VAD_API_URLS:
         raise HTTPException(status_code=400, detail="Invalid VAD API URL")
