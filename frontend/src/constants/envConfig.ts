@@ -20,4 +20,5 @@ export function isValidApiUrl(url) {
   return ALLOWED_API_URLS.includes(url);
 }
 
+export { isValidApiUrl };
 export default envConfig;

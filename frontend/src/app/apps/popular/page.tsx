@@ -4,6 +4,10 @@ import { CategoryNav } from '../components/category-nav';
 import type { Plugin, PluginStat } from '../components/types';
 
 async function getPluginsData() {
+  if (!envConfig.isValidApiUrl(envConfig.API_URL)) {
+    throw new Error('Invalid API URL');
+  }
+
   const [pluginsResponse, statsResponse] = await Promise.all([
     fetch(`${envConfig.API_URL}/v1/approved-apps?include_reviews=true`, {
       cache: 'no-store',
