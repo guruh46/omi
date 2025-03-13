@@ -7,8 +7,15 @@ const formatTwitterAvatarUrl = (url: string): string => {
   if (!url) return '/omi-avatar.svg';
   let formattedUrl = url.replace('http://', 'https://');
   formattedUrl = formattedUrl.replace('_normal', '');
-  if (formattedUrl.includes('pbs.twimg.com')) {
-    formattedUrl = formattedUrl.replace('/profile_images/', '/profile_images/');
+  try {
+    const parsedUrl = new URL(formattedUrl);
+    const allowedHosts = ['pbs.twimg.com'];
+    if (allowedHosts.includes(parsedUrl.host)) {
+      formattedUrl = formattedUrl.replace('/profile_images/', '/profile_images/');
+    }
+  } catch (e) {
+    console.error('Invalid URL:', e);
+    return '/omi-avatar.svg';
   }
   return formattedUrl;
 };
