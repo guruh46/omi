@@ -16,8 +16,12 @@ export async function generateMetadata(
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const prevData = (await parent) as Metadata;
+  const memoryId = params.id;
+  if (!/^[a-zA-Z0-9_-]+$/.test(memoryId)) {
+    throw new Error('Invalid memory ID');
+  }
   const memory = (await (
-    await fetch(`${envConfig.API_URL}/v1/memories/${params.id}/shared`, {
+    await fetch(`https://api.example.com/v1/memories/${memoryId}/shared`, {
       next: {
         revalidate: 60,
       },
