@@ -19,8 +19,15 @@ headers = {
 async def send_initial_file_path(file_path: str, transcript_socket_async_send):
     print('send_initial_file_path')
     start = time.time()
+    # Define a safe base directory
+    base_path = '/safe/directory'
+    # Normalize the file path
+    normalized_path = os.path.normpath(os.path.join(base_path, file_path))
+    # Ensure the normalized path is within the base directory
+    if not normalized_path.startswith(base_path):
+        raise Exception("Invalid file path")
     # Reading and sending in chunks
-    with open(file_path, "rb") as file:
+    with open(normalized_path, "rb") as file:
         while True:
             chunk = file.read(320)
             if not chunk:
