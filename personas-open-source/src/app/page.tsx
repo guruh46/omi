@@ -553,10 +553,15 @@ Recent activity on Twitter:\n"${enhancedDesc}" which you can use for your person
     try {
       if (await checkExistingProfile(cleanHandle, 'linkedin')) return true;
       const encodedHandle = encodeURIComponent(cleanHandle);
-      const profileResponse = await fetch(`https://${process.env.NEXT_PUBLIC_LINKEDIN_API_HOST}/profile-data-connection-count-posts?username=${encodedHandle}`, {
+      const allowedHosts = ['api.linkedin.com', 'another-trusted-host.com'];
+      const linkedinApiHost = process.env.NEXT_PUBLIC_LINKEDIN_API_HOST!;
+      if (!allowedHosts.includes(linkedinApiHost)) {
+        throw new Error('Invalid LinkedIn API host');
+      }
+      const profileResponse = await fetch(`https://${linkedinApiHost}/profile-data-connection-count-posts?username=${encodedHandle}`, {
         headers: {
           'x-rapidapi-key': process.env.NEXT_PUBLIC_LINKEDIN_API_KEY!,
-          'x-rapidapi-host': process.env.NEXT_PUBLIC_LINKEDIN_API_HOST!,
+          'x-rapidapi-host': linkedinApiHost,
         },
       });
       if (!profileResponse.ok) return false;
