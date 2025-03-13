@@ -1,8 +1,11 @@
 'use server';
-import envConfig from '@/src/constants/envConfig';
+import envConfig, { isValidApiUrl } from '@/src/constants/envConfig';
 
 export default async function getTrends() {
   try {
+    if (!isValidApiUrl(envConfig.API_URL)) {
+      throw new Error('Invalid API URL');
+    }
     const response = await fetch(`${envConfig.API_URL}/v1/trends`, {
       cache: 'no-cache',
     });
