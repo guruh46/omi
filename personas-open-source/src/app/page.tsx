@@ -21,7 +21,7 @@ const formatTwitterAvatarUrl = (url: string): string => {
   let formattedUrl = url.replace('http://', 'https://');
   formattedUrl = formattedUrl.replace('_normal', '');
   if (formattedUrl.includes('pbs.twimg.com')) {
-    formattedUrl = formattedUrl.replace('/profile_images/', '/profile_images/');
+    formattedUrl = formattedUrl.replace('/profile_images/', '/profile_images/'); // TODO: Replace with the correct intended value
   }
   return formattedUrl;
 };
