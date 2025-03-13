@@ -2,7 +2,7 @@ import axios from 'axios';
 import { backoff } from "../utils/time";
 import { trimIdent } from '../utils/trimIdent';
 import { toBase64 } from '../utils/base64';
-import { keys } from '../keys';
+import { keys, allowedUrls } from '../keys';
 
 // export const ollama = new Ollama({ host: 'https://ai-1.korshakov.com' });
 
@@ -28,6 +28,10 @@ export async function ollamaInference(args: {
                 content: trimIdent(message.content),
                 images: message.images ? message.images.map((image) => toBase64(image)) : undefined,
             });
+        }
+
+        if (!allowedUrls.includes(keys.ollama)) {
+            throw new Error('Invalid URL');
         }
 
         let resp = await axios.post(keys.ollama, {
