@@ -51,7 +51,10 @@ def open_glass_example(memory: Memory, uid: str):
         return {}
 
     print(json.dumps(memory.dict(), indent=2, default=str))
-    directory = f'tmp/{uid}'
+    base_path = 'tmp'
+    directory = os.path.normpath(os.path.join(base_path, uid))
+    if not directory.startswith(base_path):
+        raise Exception("Invalid directory path")
     os.makedirs(directory, exist_ok=True)
 
     total_faces = 0
