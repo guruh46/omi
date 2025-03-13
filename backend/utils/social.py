@@ -14,10 +14,15 @@ if rapid_api_host not in authorized_hosts:
     raise ValueError("Invalid RAPID_API_HOST")
 rapid_api_key = os.getenv('RAPID_API_KEY')
 
+def construct_url(endpoint: str, handle: str) -> str:
+    if rapid_api_host not in authorized_hosts:
+        raise ValueError("Invalid RAPID_API_HOST")
+    return f"https://{rapid_api_host}/{endpoint}?screenname={handle}"
+
 defaultTimeoutSec = 15
 
 async def get_twitter_profile(handle: str) -> Dict[str, Any]:
-    url = f"https://{rapid_api_host}/screenname.php?screenname={handle}"
+    url = construct_url("screenname.php", handle)
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
@@ -31,7 +36,7 @@ async def get_twitter_profile(handle: str) -> Dict[str, Any]:
 
 async def get_twitter_timeline(handle: str) -> Dict[str, Any]:
     print("Fetching Twitter timeline...")
-    url = f"https://{rapid_api_host}/timeline.php?screenname={handle}"
+    url = construct_url("timeline.php", handle)
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
@@ -45,7 +50,7 @@ async def get_twitter_timeline(handle: str) -> Dict[str, Any]:
 
 async def verify_latest_tweet(username: str, handle: str) -> Dict[str, Any]:
     print("Fetching latest tweet...")
-    url = f"https://{rapid_api_host}/timeline.php?screenname={handle}"
+    url = construct_url("timeline.php", handle)
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
