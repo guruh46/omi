@@ -17,6 +17,9 @@ AUTHORIZED_VAD_API_URLS = [
     "https://trusted-vad-api2.com"
 ]
 
+def is_valid_vad_api_url(url):
+    return url in AUTHORIZED_VAD_API_URLS
+
 def validate_vad_api_url(vad_api_url):
     if vad_api_url not in AUTHORIZED_VAD_API_URLS:
         raise HTTPException(status_code=400, detail="Unauthorized VAD API URL")
@@ -92,7 +95,8 @@ def vad_is_empty(file_path, return_segments: bool = False, cache: bool = False):
         with open(normalized_path, 'rb') as file:
             files = {'file': (normalized_path.split('/')[-1], file, 'audio/wav')}
             vad_api_url = os.getenv('HOSTED_VAD_API_URL')
-            validate_vad_api_url(vad_api_url)
+            if not is_valid_vad_api_url(vad_api_url):
+                raise HTTPException(status_code=400, detail="Invalid VAD API URL")
             response = requests.post(vad_api_url, files=files)
             segments = response.json()
             if cache:
