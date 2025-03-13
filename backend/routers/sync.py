@@ -4,10 +4,11 @@ import threading
 import time
 from datetime import datetime
 from typing import List
-
+import re
 from fastapi import APIRouter, UploadFile, File, Depends, HTTPException
 from opuslib import Decoder
 from pydub import AudioSegment
+from werkzeug.utils import secure_filename
 
 from database.memories import get_closest_memory_to_timestamps, update_memory_segments
 from models.memory import CreateMemory
@@ -71,11 +72,13 @@ def get_timestamp_from_path(path: str):
 
 
 def retrieve_file_paths(files: List[UploadFile], uid: str):
+    if not re.match(r'^[a-zA-Z0-9_-]+$', uid):
+        raise HTTPException(status_code=400, detail="Invalid user ID")
     directory = f'syncing/{uid}/'
     os.makedirs(directory, exist_ok=True)
     paths = []
     for file in files:
-        filename = file.filename
+        filename = secure_filename(file.filename)
         # Validate the file is .bin and contains a _$timestamp.bin, if not, 400 bad request
         if not filename.endswith('.bin'):
             raise HTTPException(status_code=400, detail=f"Invalid file format {filename}")
