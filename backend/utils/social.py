@@ -14,10 +14,14 @@ if rapid_api_host not in authorized_hosts:
     raise ValueError("Invalid RAPID_API_HOST")
 rapid_api_key = os.getenv('RAPID_API_KEY')
 
-def construct_url(endpoint: str, handle: str) -> str:
+def get_validated_rapid_api_host() -> str:
     if rapid_api_host not in authorized_hosts:
         raise ValueError("Invalid RAPID_API_HOST")
-    return f"https://{rapid_api_host}/{endpoint}?screenname={handle}"
+    return rapid_api_host
+
+def construct_url(endpoint: str, handle: str) -> str:
+    validated_host = get_validated_rapid_api_host()
+    return f"https://{validated_host}/{endpoint}?screenname={handle}"
 
 defaultTimeoutSec = 15
 
@@ -26,7 +30,7 @@ async def get_twitter_profile(handle: str) -> Dict[str, Any]:
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
-        "X-RapidAPI-Host": rapid_api_host
+        "X-RapidAPI-Host": get_validated_rapid_api_host()
     }
 
     response = httpx.get(url, headers=headers, timeout=defaultTimeoutSec)
@@ -40,7 +44,7 @@ async def get_twitter_timeline(handle: str) -> Dict[str, Any]:
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
-        "X-RapidAPI-Host": rapid_api_host
+        "X-RapidAPI-Host": get_validated_rapid_api_host()
     }
 
     response = httpx.get(url, headers=headers, timeout=defaultTimeoutSec)
@@ -54,7 +58,7 @@ async def verify_latest_tweet(username: str, handle: str) -> Dict[str, Any]:
 
     headers = {
         "X-RapidAPI-Key": rapid_api_key,
-        "X-RapidAPI-Host": rapid_api_host
+        "X-RapidAPI-Host": get_validated_rapid_api_host()
     }
 
     response = httpx.get(url, headers=headers, timeout=defaultTimeoutSec)
