@@ -243,7 +243,7 @@ def setup_status():
         logger.error(f"Error checking setup status: {str(e)}")
         return jsonify({
             "is_setup_completed": False,
-            "error": str(e)
+            "error": "An internal error has occurred."
         }), 500
 
 @app.route('/status', methods=['GET'])
