@@ -60,7 +60,12 @@ def is_audio_empty(file_path, sample_rate=8000):
 
 def vad_is_empty(file_path, return_segments: bool = False, cache: bool = False):
     """Uses vad_modal/vad.py deployment (Best quality)"""
-    caching_key = f'vad_is_empty:{file_path}'
+    base_path = '/safe/root/directory'
+    normalized_path = os.path.normpath(file_path)
+    if not normalized_path.startswith(base_path):
+        raise HTTPException(status_code=400, detail="Invalid file path")
+
+    caching_key = f'vad_is_empty:{normalized_path}'
     if cache:
         if exists := redis_db.get_generic_cache(caching_key):
             if return_segments:
@@ -68,10 +73,10 @@ def vad_is_empty(file_path, return_segments: bool = False, cache: bool = False):
             return len(exists) == 0
 
     try:
-        # file_duration = AudioSegment.from_wav(file_path).duration_seconds
+        # file_duration = AudioSegment.from_wav(normalized_path).duration_seconds
         # print('vad_is_empty file duration:', file_duration)
-        with open(file_path, 'rb') as file:
-            files = {'file': (file_path.split('/')[-1], file, 'audio/wav')}
+        with open(normalized_path, 'rb') as file:
+            files = {'file': (normalized_path.split('/')[-1], file, 'audio/wav')}
             response = requests.post(os.getenv('HOSTED_VAD_API_URL'), files=files)
             segments = response.json()
             if cache:
