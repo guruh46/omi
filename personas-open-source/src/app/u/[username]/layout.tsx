@@ -11,7 +11,7 @@ const formatTwitterAvatarUrl = (url: string): string => {
     const parsedUrl = new URL(formattedUrl);
     const allowedHosts = ['pbs.twimg.com'];
     if (allowedHosts.includes(parsedUrl.host)) {
-      formattedUrl = formattedUrl.replace('/profile_images/', '/profile_images/');
+      formattedUrl = formattedUrl.replace('/profile_images/', '');
     }
   } catch (e) {
     console.error('Invalid URL:', e);
