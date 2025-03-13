@@ -8,8 +8,14 @@ async function getPluginsData() {
     throw new Error('Invalid API URL');
   }
 
+  if (!envConfig.isValidApiUrl(envConfig.API_URL)) {
+    throw new Error('Invalid API URL');
+  }
+
+  const apiUrl = new URL('/v1/approved-apps?include_reviews=true', envConfig.API_URL).toString();
+
   const [pluginsResponse, statsResponse] = await Promise.all([
-    fetch(`${envConfig.API_URL}/v1/approved-apps?include_reviews=true`, {
+    fetch(apiUrl, {
       cache: 'no-store',
     }),
     fetch(
