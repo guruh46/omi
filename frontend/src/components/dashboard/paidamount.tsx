@@ -1,5 +1,5 @@
 'use client';
-import envConfig from '@/src/constants/envConfig';
+import envConfig, { isValidApiUrl } from '@/src/constants/envConfig';
 
 import { useState } from 'react';
 import { DollarSign } from 'lucide-react';
@@ -32,6 +32,9 @@ export default function PaidAmountDialog({ plugin }: { plugin: Plugin }) {
     const amount = formData.get('amount') as string;
     //const adminKey = formData.get('adminKey') as string;
     try {
+      if (!isValidApiUrl(envConfig.API_URL)) {
+        throw new Error('Invalid API URL');
+      }
       const response = await fetch(`${envConfig.API_URL}/v1/plugins/report-comp`, {
         method: 'POST',
         headers: {
