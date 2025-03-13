@@ -468,10 +468,15 @@ export default function HomePage() {
     setIsCreating(true);
     try {
       if (await checkExistingProfile(cleanHandle, 'twitter')) return true;
-      const profileResponse = await fetch(`https://${process.env.NEXT_PUBLIC_RAPIDAPI_HOST}/screenname.php?screenname=${cleanHandle}`, {
+      const allowedHosts = ['api.example.com', 'api2.example.com']; // Add allowed hostnames here
+      const rapidApiHost = process.env.NEXT_PUBLIC_RAPIDAPI_HOST!;
+      if (!allowedHosts.includes(rapidApiHost)) {
+        throw new Error('Invalid API host');
+      }
+      const profileResponse = await fetch(`https://${rapidApiHost}/screenname.php?screenname=${cleanHandle}`, {
         headers: {
           'x-rapidapi-key': process.env.NEXT_PUBLIC_RAPIDAPI_KEY!,
-          'x-rapidapi-host': process.env.NEXT_PUBLIC_RAPIDAPI_HOST!,
+          'x-rapidapi-host': rapidApiHost,
         },
       });
       if (!profileResponse.ok) return false;
