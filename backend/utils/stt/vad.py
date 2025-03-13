@@ -11,6 +11,16 @@ from database import redis_db
 
 torch.set_num_threads(1)
 torch.hub.set_dir('pretrained_models')
+
+AUTHORIZED_VAD_API_URLS = [
+    "https://trusted-vad-api1.com",
+    "https://trusted-vad-api2.com"
+]
+
+def validate_vad_api_url(url):
+    if url not in AUTHORIZED_VAD_API_URLS:
+        raise HTTPException(status_code=400, detail="Invalid VAD API URL")
+
 model, utils = torch.hub.load(repo_or_dir='snakers4/silero-vad', model='silero_vad')
 (get_speech_timestamps, save_audio, read_audio, VADIterator, collect_chunks) = utils
 
@@ -77,7 +87,9 @@ def vad_is_empty(file_path, return_segments: bool = False, cache: bool = False):
         # print('vad_is_empty file duration:', file_duration)
         with open(normalized_path, 'rb') as file:
             files = {'file': (normalized_path.split('/')[-1], file, 'audio/wav')}
-            response = requests.post(os.getenv('HOSTED_VAD_API_URL'), files=files)
+            vad_api_url = os.getenv('HOSTED_VAD_API_URL')
+            validate_vad_api_url(vad_api_url)
+            response = requests.post(vad_api_url, files=files)
             segments = response.json()
             if cache:
                 redis_db.set_generic_cache(caching_key, segments, ttl=60 * 60 * 24)
