@@ -8,7 +8,10 @@ from database.apps import update_app_in_db, upsert_app_to_db, get_persona_by_id_
 from database.redis_db import delete_generic_cache, save_username, is_username_taken
 from utils.llm import condense_tweets, generate_twitter_persona_prompt
 
+authorized_hosts = ["trustedhost1.com", "trustedhost2.com"]
 rapid_api_host = os.getenv('RAPID_API_HOST')
+if rapid_api_host not in authorized_hosts:
+    raise ValueError("Invalid RAPID_API_HOST")
 rapid_api_key = os.getenv('RAPID_API_KEY')
 
 defaultTimeoutSec = 15
