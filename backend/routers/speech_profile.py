@@ -48,8 +48,15 @@ def upload_profile(data: UploadProfile, uid: str = Depends(auth.get_current_user
 
 @router.post('/v3/upload-audio', tags=['v3'])
 def upload_profile(file: UploadFile, uid: str = Depends(auth.get_current_user_uid)):
-    os.makedirs(f'_temp/{uid}', exist_ok=True)
-    file_path = f"_temp/{uid}/{file.filename}"
+    import re
+    if not re.match(r'^[a-zA-Z0-9_-]+$', uid):
+        raise HTTPException(status_code=400, detail="Invalid UID format")
+    base_path = '_temp'
+    user_path = os.path.normpath(os.path.join(base_path, uid))
+    if not user_path.startswith(base_path):
+        raise HTTPException(status_code=400, detail="Invalid path")
+    os.makedirs(user_path, exist_ok=True)
+    file_path = os.path.join(user_path, file.filename)
     with open(file_path, 'wb') as f:
         f.write(file.file.read())
 
