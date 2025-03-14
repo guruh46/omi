@@ -1,7 +1,7 @@
 import json
 import os
 from typing import List
-
+from urllib.parse import urlparse
 import requests
 from pydub import AudioSegment
 
@@ -14,8 +14,18 @@ def get_speech_profile_matching_predictions(uid: str, audio_file_path: str, segm
     files = [
         ('audio_file', (os.path.basename(audio_file_path), open(audio_file_path, 'rb'), 'audio/wav')),
     ]
+    base_url = os.getenv('HOSTED_SPEECH_PROFILE_API_URL')
+    if not base_url:
+        raise ValueError("Invalid base URL")
+    parsed_url = urlparse(base_url)
+    if parsed_url.scheme != "https" or parsed_url.hostname != "trusted-domain.com":
+        raise ValueError("Invalid base URL")
+    
+    if not uid.isalnum():
+        raise ValueError("Invalid UID")
+    
     response = requests.post(
-        os.getenv('HOSTED_SPEECH_PROFILE_API_URL') + f'?uid={uid}',
+        f"{base_url}?uid={uid}",
         data={'segments': json.dumps(segments)},
         files=files
     )
