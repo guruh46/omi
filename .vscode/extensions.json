@@ -1,5 +1,6 @@
 {
-    "recommendations": [
-        "nordic-semiconductor.nrf-connect-extension-pack"
-    ]
+  "recommendations": [
+    "nordic-semiconductor.nrf-connect-extension-pack",
+    "inlang.vs-code-extension"
+  ]
 }
