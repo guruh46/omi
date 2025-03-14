@@ -46,6 +46,9 @@ class SpeechState(str, Enum):
     no_speech = 'no_speech'
 
 
+def is_valid_vad_api_url(url):
+    return url in AUTHORIZED_VAD_API_URLS
+
 def is_speech_present(data, vad_iterator, window_size_samples=256):
     data_int16 = np.frombuffer(data, dtype=np.int16)
     data_float32 = data_int16.astype(np.float32) / 32768.0
