@@ -3,6 +3,7 @@ from typing import Optional
 
 from fastapi import APIRouter, UploadFile, Depends, HTTPException
 from pydub import AudioSegment
+from werkzeug.utils import secure_filename
 
 from database.memories import get_memory
 from database.redis_db import remove_user_soniox_speech_profile
@@ -48,7 +49,8 @@ def upload_profile(data: UploadProfile, uid: str = Depends(auth.get_current_user
 
 @router.post('/v3/upload-audio', tags=['v3'])
 def upload_profile(file: UploadFile, uid: str = Depends(auth.get_current_user_uid)):
-    base_path = os.path.join('_temp', uid)
+    sanitized_uid = secure_filename(uid)
+    base_path = os.path.join('_temp', sanitized_uid)
     os.makedirs(base_path, exist_ok=True)
     file_path = os.path.normpath(os.path.join(base_path, file.filename))
     if not file_path.startswith(base_path):
