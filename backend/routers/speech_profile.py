@@ -48,8 +48,11 @@ def upload_profile(data: UploadProfile, uid: str = Depends(auth.get_current_user
 
 @router.post('/v3/upload-audio', tags=['v3'])
 def upload_profile(file: UploadFile, uid: str = Depends(auth.get_current_user_uid)):
-    os.makedirs(f'_temp/{uid}', exist_ok=True)
-    file_path = f"_temp/{uid}/{file.filename}"
+    base_path = os.path.join('_temp', uid)
+    os.makedirs(base_path, exist_ok=True)
+    file_path = os.path.normpath(os.path.join(base_path, file.filename))
+    if not file_path.startswith(base_path):
+        raise HTTPException(status_code=400, detail="Invalid file path.")
     with open(file_path, 'wb') as f:
         f.write(file.file.read())
 
