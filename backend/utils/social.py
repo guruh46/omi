@@ -42,7 +42,7 @@ def with_retry(operation_name: str, func: Callable[[], T]) -> T:
             delay = base_delay * (2 ** attempt)
             if attempt == max_retries - 1:
                 raise
-            print(f"Error in {operation_name} (attempt {attempt+1}/{max_retries}): {str(e)}")
+            print(f"Error occurred during operation (attempt {attempt+1}/{max_retries})")
             print(f"Retrying in {delay} seconds...")
             time.sleep(delay)
     raise Exception("Maximum retries exceeded")
