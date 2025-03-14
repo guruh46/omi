@@ -14,8 +14,15 @@ def get_speech_profile_matching_predictions(uid: str, audio_file_path: str, segm
     files = [
         ('audio_file', (os.path.basename(audio_file_path), open(audio_file_path, 'rb'), 'audio/wav')),
     ]
+    base_url = os.getenv('HOSTED_SPEECH_PROFILE_API_URL')
+    if not base_url or not base_url.startswith("https://trusted-domain.com"):
+        raise ValueError("Invalid base URL")
+    
+    if not uid.isalnum():
+        raise ValueError("Invalid UID")
+    
     response = requests.post(
-        os.getenv('HOSTED_SPEECH_PROFILE_API_URL') + f'?uid={uid}',
+        f"{base_url}?uid={uid}",
         data={'segments': json.dumps(segments)},
         files=files
     )
