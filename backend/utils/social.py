@@ -16,14 +16,16 @@ if rapid_api_host not in authorized_hosts:
 rapid_api_key = os.getenv('RAPID_API_KEY')
 
 def get_validated_rapid_api_host() -> str:
-    if rapid_api_host not in authorized_hosts:
+    host_mapping = {
+        "trustedhost1": "trustedhost1.com",
+        "trustedhost2": "trustedhost2.com"
+    }
+    if rapid_api_host not in host_mapping:
         raise ValueError("Invalid RAPID_API_HOST")
-    return rapid_api_host
+    return host_mapping[rapid_api_host]
 
 def construct_url(endpoint: str, handle: str) -> str:
     validated_host = get_validated_rapid_api_host()
-    if validated_host not in authorized_hosts:
-        raise ValueError("Invalid host in URL construction")
     return f"https://{validated_host}/{endpoint}?screenname={handle}"
 
 defaultTimeoutSec = 15
