@@ -23,6 +23,9 @@ def is_valid_vad_api_url(url):
 def is_valid_vad_api_url(url):
     return url in AUTHORIZED_VAD_API_URLS
 
+def is_valid_vad_api_url(url):
+    return url in AUTHORIZED_VAD_API_URLS
+
 def validate_vad_api_url(vad_api_url):
     if vad_api_url not in AUTHORIZED_VAD_API_URLS:
         raise HTTPException(status_code=400, detail="Unauthorized VAD API URL")
