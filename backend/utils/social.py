@@ -22,6 +22,8 @@ def get_validated_rapid_api_host() -> str:
 
 def construct_url(endpoint: str, handle: str) -> str:
     validated_host = get_validated_rapid_api_host()
+    if validated_host not in authorized_hosts:
+        raise ValueError("Invalid host in URL construction")
     return f"https://{validated_host}/{endpoint}?screenname={handle}"
 
 defaultTimeoutSec = 15
