@@ -195,8 +195,8 @@ class FrameDeviceConnection extends DeviceConnection {
 
     // Cancel heartbeat subscription when device disconnects
     var device = bleDevice;
-    device!.cancelWhenDisconnected(_heartbeatSubscription!);
-    device!.cancelWhenDisconnected(_debugSubscription!);
+    device.cancelWhenDisconnected(_heartbeatSubscription!);
+    device.cancelWhenDisconnected(_debugSubscription!);
   }
 
   Future<bool> sendUntilEchoed(String data,
@@ -236,7 +236,7 @@ class FrameDeviceConnection extends DeviceConnection {
   Future disconnectDevice() async {
     var device = bleDevice;
     try {
-      await device!.disconnect(queue: false);
+      await device.disconnect(queue: false);
     } catch (e) {
       print('bleDisconnectDevice failed: $e');
     }
@@ -263,7 +263,9 @@ class FrameDeviceConnection extends DeviceConnection {
   }
 
   @override
-  Future<StreamSubscription?> performGetBleButtonListener({required void Function(List<int>) onButtonReceived}) async {}
+  Future<StreamSubscription?> performGetBleButtonListener({required void Function(List<int>) onButtonReceived}) async {
+    return null;
+  }
 
   @override
   Future<StreamSubscription?> performGetBleAudioBytesListener(
@@ -284,7 +286,7 @@ class FrameDeviceConnection extends DeviceConnection {
     });
 
     var device = bleDevice;
-    device!.cancelWhenDisconnected(subscription);
+    device.cancelWhenDisconnected(subscription);
 
     final audioCodec = await getAudioCodec();
     await sendUntilEchoed("sampleRate=${mapCodecToSampleRate(audioCodec)}");
@@ -326,7 +328,7 @@ class FrameDeviceConnection extends DeviceConnection {
     });
 
     var device = bleDevice;
-    device!.cancelWhenDisconnected(subscription);
+    device.cancelWhenDisconnected(subscription);
 
     return subscription;
   }
@@ -339,7 +341,7 @@ class FrameDeviceConnection extends DeviceConnection {
   Future<void> init() async {
     print("Initialising Frame Device");
     var device = bleDevice;
-    if (_frame != null && device != null && _frame!.isConnected && device!.isConnected) {
+    if (_frame != null && _frame!.isConnected && device.isConnected) {
       print("Device is already connected in init...?");
       //await afterConnect();
       //return;
@@ -347,9 +349,9 @@ class FrameDeviceConnection extends DeviceConnection {
     _frame ??= Frame();
     _frame!.useLibrary = false;
     bool connected = false;
-    if (device!.isConnected) {
+    if (device.isConnected) {
       print("Device is already connected, so attaching to existing connection");
-      connected = await _frame!.connectToExistingBleDevice(device!);
+      connected = await _frame!.connectToExistingBleDevice(device);
     } else {
       print("Device is not connected, so connecting to device");
       connected = await _frame!.connectToDevice(deviceId);
@@ -420,7 +422,7 @@ class FrameDeviceConnection extends DeviceConnection {
     });
 
     var device = bleDevice;
-    device!.cancelWhenDisconnected(subscription);
+    device.cancelWhenDisconnected(subscription);
 
     return subscription;
   }

@@ -578,7 +578,7 @@ class _PersonaProfilePageState extends State<PersonaProfilePage> {
                                     },
                                     child: _buildSocialLink(
                                       icon: Assets.images.xLogoMini.path,
-                                      text: provider.twitterProfile?['username'] ?? '@username',
+                                      text: provider.twitterProfile['username'] ?? '@username',
                                       isConnected: provider.hasTwitterConnection,
                                       showConnect: !provider.hasTwitterConnection,
                                     ),

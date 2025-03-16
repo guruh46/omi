@@ -157,7 +157,7 @@ class AppMetadataWidget extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(8.0),
                                       ),
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.copy,
                                         color: Colors.white,
                                         size: 20,
@@ -172,7 +172,7 @@ class AppMetadataWidget extends StatelessWidget {
                             ),
                           ],
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
@@ -359,9 +359,9 @@ class AppMetadataWidget extends StatelessWidget {
                                       effect: ShimmerEffect(
                                         baseColor: Colors.grey[700]!,
                                         highlightColor: Colors.grey[600]!,
-                                        duration: Duration(seconds: 1),
+                                        duration: const Duration(seconds: 1),
                                       ),
-                                      child: Bone.multiText(),
+                                      child: const Bone.multiText(),
                                     )
                                   : TextFormField(
                                       maxLines: null,
@@ -398,7 +398,7 @@ class AppMetadataWidget extends StatelessWidget {
                                   ),
                                 ),
                               )
-                            : SizedBox.shrink(),
+                            : const SizedBox.shrink(),
                       ],
                     ),
                   ),
@@ -413,7 +413,7 @@ class AppMetadataWidget extends StatelessWidget {
                             style: TextStyle(color: Colors.grey.shade300, fontSize: 16),
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                   allowPaidApps
                       ? GestureDetector(
                           onTap: () {
@@ -518,7 +518,7 @@ class AppMetadataWidget extends StatelessWidget {
                             ),
                           ),
                         )
-                      : SizedBox.shrink(),
+                      : const SizedBox.shrink(),
                 ],
               ),
             ),

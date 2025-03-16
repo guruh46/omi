@@ -193,7 +193,7 @@ class CaptureProvider extends ChangeNotifier
       }
       var value = await _getBleButtonState(deviceId);
       var buttonState = ByteData.view(Uint8List.fromList(value.sublist(0, 4).reversed.toList()).buffer).getUint32(0);
-      debugPrint("watch device button ${buttonState}");
+      debugPrint("watch device button $buttonState");
 
       // Force process
       if (buttonState == 5 && session == _voiceCommandSession) {
@@ -211,7 +211,7 @@ class CaptureProvider extends ChangeNotifier
     _bleButtonStream = await _getBleButtonListener(deviceId, onButtonReceived: (List<int> value) {
       if (value.isEmpty) return;
       var buttonState = ByteData.view(Uint8List.fromList(value.sublist(0, 4).reversed.toList()).buffer).getUint32(0);
-      debugPrint("device button ${buttonState}");
+      debugPrint("device button $buttonState");
 
       // start long press
       if (buttonState == 3 && _voiceCommandSession == null) {

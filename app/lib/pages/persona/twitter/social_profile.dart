@@ -238,7 +238,7 @@ class _SocialHandleScreenState extends State<SocialHandleScreen> {
                                     },
                                   );
 
-                                  routeToPage(context, OnboardingWrapper());
+                                  routeToPage(context, const OnboardingWrapper());
                                 },
                                 child: const Text(
                                   'Clone from omi device',

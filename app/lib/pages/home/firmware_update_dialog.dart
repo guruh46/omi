@@ -19,10 +19,10 @@ class FirmwareUpdateDialog extends StatefulWidget {
   final List<String> steps;
 
   const FirmwareUpdateDialog({
-    Key? key,
+    super.key,
     required this.onUpdateStart,
     required this.steps,
-  }) : super(key: key);
+  });
 
   @override
   State<FirmwareUpdateDialog> createState() => _FirmwareUpdateDialogState();
@@ -104,9 +104,9 @@ class _FirmwareUpdateDialogState extends State<FirmwareUpdateDialog> {
                   Theme(
                     data: Theme.of(context).copyWith(
                       checkboxTheme: CheckboxThemeData(
-                        fillColor: MaterialStateProperty.resolveWith<Color>(
-                          (Set<MaterialState> states) {
-                            if (states.contains(MaterialState.selected)) {
+                        fillColor: WidgetStateProperty.resolveWith<Color>(
+                          (Set<WidgetState> states) {
+                            if (states.contains(WidgetState.selected)) {
                               return Colors.deepPurple;
                             }
                             return Colors.grey.shade700;

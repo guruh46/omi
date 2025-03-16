@@ -99,7 +99,7 @@ class ActionFieldsWidget extends StatelessWidget {
                           ],
                         ),
                       );
-                    }).toList(),
+                    }),
 
                     // Add button for future actions
                     if (provider.getActionTypes().length > 1)

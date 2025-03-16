@@ -1,7 +1,4 @@
-import 'dart:io';
 
-import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:omi/backend/schema/fact.dart';
 import 'package:omi/providers/connectivity_provider.dart';
@@ -172,7 +169,7 @@ class _FactsPageState extends State<_FactsPage> {
           TextFormField(
             controller: contentController,
             autofocus: true,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'I love Omi ...',
               border: InputBorder.none,
               labelStyle: TextStyle(color: Colors.grey),
@@ -215,7 +212,7 @@ class _FactsPageState extends State<_FactsPage> {
                                 ),
                               ],
                             )
-                          : SizedBox.shrink(),
+                          : const SizedBox.shrink(),
                       Text(
                         category.toString().split('.').last,
                         style: const TextStyle(color: Colors.white),
@@ -407,8 +404,8 @@ class _FactsPageState extends State<_FactsPage> {
           )
         : ListView.separated(
             separatorBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(
+              return const Padding(
+                padding: EdgeInsets.only(
                   left: 20,
                   right: 20,
                 ),

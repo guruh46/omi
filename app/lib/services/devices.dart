@@ -172,7 +172,7 @@ class DeviceService implements IDeviceService {
   }
 
   void onDeviceConnectionStateChanged(String deviceId, DeviceConnectionState state) {
-    debugPrint("device connection state changed...${deviceId}...${state}");
+    debugPrint("device connection state changed...$deviceId...$state");
     for (var s in _subscriptions.values) {
       s.onDeviceConnectionStateChanged(deviceId, state);
     }
@@ -193,7 +193,7 @@ class DeviceService implements IDeviceService {
     }
     mutex = true;
 
-    debugPrint("ensureConnection ${_connection?.device.id} ${_connection?.status} ${force}");
+    debugPrint("ensureConnection ${_connection?.device.id} ${_connection?.status} $force");
     try {
       // Not force
       if (!force && _connection != null) {

@@ -152,7 +152,7 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
     });
   }
 
-  Future<BtDevice?> _scanAndConnectDevice({bool autoConnect = true, bool timeout = false}) async {
+  Future<BtDevice?> _scanAndConnectDevice({bool timeout = false}) async {
     var device = await _getConnectedDevice();
     if (device != null) {
       return device;
@@ -358,7 +358,7 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
       builder: (context) => ConfirmationDialog(
         title: 'Firmware Update Available',
         description:
-            'A new firmware update (${_latestFirmwareVersion}) is available for your Omi device. Would you like to update now?',
+            'A new firmware update ($_latestFirmwareVersion) is available for your Omi device. Would you like to update now?',
         confirmText: 'Update',
         cancelText: 'Later',
         onConfirm: () {
@@ -388,7 +388,7 @@ class DeviceProvider extends ChangeNotifier implements IDeviceServiceSubsciption
 
   @override
   void onDeviceConnectionStateChanged(String deviceId, DeviceConnectionState state) async {
-    debugPrint("provider > device connection state changed...${deviceId}...${state}...${connectedDevice?.id}");
+    debugPrint("provider > device connection state changed...$deviceId...$state...${connectedDevice?.id}");
     switch (state) {
       case DeviceConnectionState.connected:
         var connection = await ServiceManager.instance().device.ensureConnection(deviceId);

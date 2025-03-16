@@ -16,6 +16,7 @@ class AuthenticationProvider extends BaseProvider {
   User? user;
   String? authToken;
   bool _loading = false;
+  @override
   bool get loading => _loading;
 
   AuthenticationProvider() {

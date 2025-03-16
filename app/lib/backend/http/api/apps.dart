@@ -201,7 +201,7 @@ Future<(bool, String, String?)> submitAppServer(File file, Map<String, dynamic> 
     if (response.statusCode == 200) {
       var respData = jsonDecode(response.body);
       String? appId = respData['app_id'];
-      debugPrint('submitAppServer Response body: ${respData}');
+      debugPrint('submitAppServer Response body: $respData');
       return (true, '', appId);
     } else {
       debugPrint('Failed to submit app. Status code: ${response.statusCode}');

@@ -10,9 +10,9 @@ class ApiKeysWidget extends StatefulWidget {
   final String appId;
 
   const ApiKeysWidget({
-    Key? key,
+    super.key,
     required this.appId,
-  }) : super(key: key);
+  });
 
   @override
   State<ApiKeysWidget> createState() => _ApiKeysWidgetState();
@@ -312,7 +312,7 @@ class _ApiKeysWidgetState extends State<ApiKeysWidget> {
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: provider.apiKeys.length,
-      separatorBuilder: (context, index) => SizedBox(height: 12),
+      separatorBuilder: (context, index) => const SizedBox(height: 12),
       itemBuilder: (context, index) {
         final key = provider.apiKeys[index];
         return Container(
@@ -327,7 +327,7 @@ class _ApiKeysWidgetState extends State<ApiKeysWidget> {
               style: const TextStyle(fontWeight: FontWeight.bold),
             ),
             subtitle: Text(
-              '${DateFormat('MMM d, yyyy HH:mm').format(key.createdAt)}',
+              DateFormat('MMM d, yyyy HH:mm').format(key.createdAt),
               style: Theme.of(context).textTheme.labelMedium,
             ),
             trailing: SizedBox(

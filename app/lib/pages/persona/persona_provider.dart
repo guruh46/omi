@@ -401,7 +401,7 @@ class PersonaProvider extends ChangeNotifier {
   }
 
   Future onTwitterVerifiedCompleted() async {
-    debugPrint("routing ${routing}");
+    debugPrint("routing $routing");
     if (routing == PersonaProfileRouting.no_device) {
       return;
     }

@@ -141,7 +141,7 @@ class Wal {
   static List<Wal> fromJsonList(List<dynamic> jsonList) => jsonList.map((e) => Wal.fromJson(e)).toList();
 
   getFileName() {
-    return "audio_${device.replaceAll(RegExp(r'[^a-zA-Z0-9]'), "").toLowerCase()}_${codec}_${sampleRate}_${channel}_${timerStart}.bin";
+    return "audio_${device.replaceAll(RegExp(r'[^a-zA-Z0-9]'), "").toLowerCase()}_${codec}_${sampleRate}_${channel}_$timerStart.bin";
   }
 }
 
@@ -250,7 +250,7 @@ class SDCardWalSync implements IWalSync {
 
   Future<File> _flushToDisk(List<List<int>> chunk, int timerStart) async {
     final directory = await getApplicationDocumentsDirectory();
-    String filePath = '${directory.path}/audio_${timerStart}.bin';
+    String filePath = '${directory.path}/audio_$timerStart.bin';
     List<int> data = [];
     for (int i = 0; i < chunk.length; i++) {
       var frame = chunk[i];
@@ -278,7 +278,7 @@ class SDCardWalSync implements IWalSync {
     int timerStart = wal.timerStart;
     await _writeToStorage(deviceId, fileNum, 0, offset);
 
-    debugPrint("_readStorageBytesToFile ${offset}");
+    debugPrint("_readStorageBytesToFile $offset");
 
     // Read
     List<List<int>> bytesData = [];

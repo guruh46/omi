@@ -15,10 +15,7 @@ class DeviceConnectionFactory {
     BtDevice device,
     BluetoothDevice bleDevice,
   ) {
-    if (device.type == null) {
-      return null;
-    }
-    switch (device.type!) {
+    switch (device.type) {
       case DeviceType.omi:
         return OmiDeviceConnection(device, bleDevice);
       case DeviceType.openglass:

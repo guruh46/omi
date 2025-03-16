@@ -264,12 +264,10 @@ class _ConversationCapturingPageState extends State<ConversationCapturingPage> w
                                           checkboxValue: !showSummarizeConfirmation,
                                           checkboxText: "Don't ask me again",
                                           onCheckboxChanged: (value) {
-                                            if (value != null) {
-                                              setState(() {
-                                                showSummarizeConfirmation = !value;
-                                              });
-                                            }
-                                          },
+                                            setState(() {
+                                              showSummarizeConfirmation = !value;
+                                            });
+                                                                                    },
                                           onCancel: () {
                                             Navigator.of(context).pop();
                                           },

@@ -115,7 +115,7 @@ class PureSocket implements IPureSocket {
       return false;
     }
 
-    debugPrint("request wss ${url}");
+    debugPrint("request wss $url");
     _channel = IOWebSocketChannel.connect(
       url,
       headers: {
@@ -202,7 +202,7 @@ class PureSocket implements IPureSocket {
   @override
   void onError(Object err, StackTrace trace) {
     _status = PureSocketStatus.disconnected;
-    print("Error: ${err}");
+    print("Error: $err");
     debugPrintStack(stackTrace: trace);
 
     _listener?.onError(err, trace);

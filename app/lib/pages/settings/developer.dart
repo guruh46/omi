@@ -241,7 +241,7 @@ class _DeveloperSettingsPageState extends State<DeveloperSettingsPage> {
                         'Webhooks',
                         style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w500),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       GestureDetector(
                         onTap: () {
                           launchUrl(Uri.parse('https://docs.omi.me/docs/developer/apps/Introduction'));
