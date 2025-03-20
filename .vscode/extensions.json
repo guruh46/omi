@@ -1,6 +1,7 @@
 {
-    "recommendations": [
-        "nordic-semiconductor.nrf-connect-extension-pack",
-        "dart-code.dart-code"
-    ]
+  "recommendations": [
+    "nordic-semiconductor.nrf-connect-extension-pack",
+    "dart-code.dart-code",
+    "inlang.vs-code-extension"
+  ]
 }
